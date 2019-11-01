@@ -1,0 +1,22 @@
+{
+  "name": "org-tracker",
+  "version": "1.0.0",
+  "description": "'Tracks membership of an org'",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "fs-extra": "^8.1.0",
+    "mongoose": "^5.7.7",
+    "tracer": "^1.0.1"
+  }
+}
