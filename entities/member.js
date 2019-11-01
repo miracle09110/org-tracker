@@ -48,10 +48,36 @@ function remove(MemberModel, id){
     });
 }
 
+function getAll(MemberModel){
+    return new Promise((resolve,reject)=>{
+        MemberModel.find({},(err,members)=>{
+            if(err){
+                reject(err);
+            }else {
+                resolve(members);
+            }
+        });
+    });
+}
+
+function get(MemberModel,id){
+    return new Promise((resolve,reject)=>{
+        MemberModel.findOne({_id: id},(err,member)=>{
+            if(err){
+                reject(err);
+            }else {
+                resolve(member);
+            }
+        });
+    });
+}
+
 
 const Member = function(){
     this.create = create;
     this.remove = remove;
+    this.getAll = getAll;
+    this.get = get;
 }
 
 module.exports = new Member;

@@ -33,5 +33,7 @@ app.listen(1987,()=>{
     logger.debug(`Listening to 1987`);
 });
 
+app.get('/api/v1.0.0/user',member.getAllMember);
+app.get('/api/v1.0.0/user/:id',member.getMember);
 app.post('/api/v1.0.0/user',member.createMember);
 app.delete('/api/v1.0.0/user/:id',member.deleteMember);

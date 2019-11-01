@@ -29,9 +29,31 @@ function deleteMember(req,res){
     });
 }
 
+function getAllMember(req,res){
+    member.getAll(MemberModel)
+    .then((members)=>{
+        res.json(members);
+    })
+    .catch((err)=>{
+        res.status(500).json({ message: err});
+    });
+}
+
+function getMember(req,res){
+    member.get(MemberModel,req.params.id)
+    .then((member)=>{
+        res.json(member);
+    })
+    .catch((err)=>{
+        res.status(500).json({ message: err});
+    });
+}
+
 const MemberController = function(){
     this.createMember = createMember;
     this.deleteMember = deleteMember;
+    this.getAllMember = getAllMember;
+    this.getMember = getMember;
 }
 
 
