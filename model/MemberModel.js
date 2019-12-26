@@ -18,8 +18,11 @@ var memberSchema = new Schema({
         employer: String,
         field: String
     },
+    date_of_birth: Number,
     batch: String,
-    status: String
+    status: String,
+    cluster_id: String,
+    login_id: String
 }, {collection :'member'})
 
 
