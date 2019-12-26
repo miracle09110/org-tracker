@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const path = require('path');
 const grapqlHTTP = require('express-graphql');
-const sassMiddleware = require('node-sass-middleware');
 
 //classes
 const logger = require('./util/logger');
@@ -46,17 +45,6 @@ app.use('/graphql',grapqlHTTP({
     schema,
     graphiql: true
 }));
-app.use(sassMiddleware({
-    src: path.join(__dirname, 'public'),
-    dest: path.join(__dirname, 'public'),
-    indentedSyntax: true, // true = .sass and false = .scss
-    sourceMap: true
-}));
-app.use('/stylesheets',express.static(path.join(__dirname,'./stylesheets')));
-app.use('/js',express.static(path.join(__dirname,'./js')));
-app.use('/views',express.static(path.join(__dirname,'./views')));
-app.use('/images',express.static(path.join(__dirname,'./images')));
-
 
 app.listen(process.env.PORT || 1973,()=>{
     logger.debug(`Listening to ${process.env.PORT}`);

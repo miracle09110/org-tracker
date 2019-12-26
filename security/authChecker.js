@@ -1,7 +1,5 @@
 'use strict'
 const CONSTANT = require('../constant');
-const credentials = require('./credentials');
-const UserModel = require('../model/UserModel');
 
 function validate(req,res,next){
     if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
@@ -16,14 +14,8 @@ function validate(req,res,next){
     }
 }
 
-function checkCredentials(req,res){
-    credentials.check(req,res, UserModel);
-}
-
-
 let AuthChecker = function(){
     this.validate = validate;
-    this.checkCredentials = checkCredentials;
 }
 
 module.exports = new AuthChecker();
