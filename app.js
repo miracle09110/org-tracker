@@ -40,7 +40,7 @@ db.connectToDB(CONSTANT.MONGO,mongoose)
 //middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(authChecker.validate);
+app.use(authChecker.validate);
 app.use(cors());
 app.use('/graphql',grapqlHTTP({
     schema,
