@@ -128,7 +128,7 @@ const AuthType = new GraphQLObjectType({
     })
 });
  
-const ActivityType = new GraphQLInputObjectType({
+const ActivityType = new GraphQLObjectType({
     name: 'Activity',
     fields: ()=>({
         imagePath: {type: GraphQLString},
