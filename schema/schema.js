@@ -11,6 +11,61 @@ const Role = require('../model/RoleModel');
 const CONST = require('../constant');
 // const {Users, Members, Clusters, Roles} =  require('./offlineData');
 
+const mockActivityData = [
+    {
+      "imagePath": "SomeimagePath1",
+      "title": "sometitle1",
+      "date":  "2019-11-21"
+    },
+    {
+      "imagePath": "SomeimagePath2",
+      "title": "sometitle2",
+      "date":  "2019-11-23"
+    },
+    {
+      "imagePath": "SomeimagePath3",
+      "title": "sometitle3",
+      "date":  "2019-11-24"
+    },
+    {
+      "imagePath": "SomeimagePath4",
+      "title": "sometitle4",
+      "date":  "2019-11-30"
+    },
+    {
+      "imagePath": "SomeimagePath5",
+      "title": "sometitle5",
+      "date":  "2019-12-21"
+    },
+    {
+      "imagePath": "SomeimagePath6",
+      "title": "sometitle6",
+      "date":  "2019-11-21"
+    },
+    {
+      "imagePath": "SomeimagePath7",
+      "title": "sometitle7",
+      "date":  "2019-11-21"
+    },
+    {
+      "imagePath": "SomeimagePath8",
+      "title": "sometitle8",
+      "date":  "2019-11-21"
+    },
+    {
+      "imagePath": "SomeimagePath9",
+      "title": "sometitle9",
+      "date":  "2019-11-21"
+    },
+    {
+      "imagePath": "SomeimagePath10",
+      "title": "sometitle10",
+      "date":  "2019-11-21"
+    },
+
+    ];
+
+
 const {
     GraphQLObjectType,
     GraphQLInputObjectType,
@@ -70,6 +125,15 @@ const AuthType = new GraphQLObjectType({
     fields: ()=>({
         success: {type: GraphQLBoolean},
         role: { type: RoleType }
+    })
+});
+ 
+const ActivityType = new GraphQLInputObjectType({
+    name: 'Activity',
+    fields: ()=>({
+        imagePath: {type: GraphQLString},
+        title: {type: GraphQLString},
+        date: {type: GraphQLString},
     })
 });
 
@@ -190,6 +254,12 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(ClusterType),
             resolve(parent,args){
                 return Cluster.find({ parent_cluster_id: 0 });
+            }
+        },
+        activities: {
+            type: new GraphQLList(ActivityType),
+            resolve(parent, args){
+                return mockActivityData;
             }
         }
     }
