@@ -18,7 +18,7 @@ var memberSchema = new Schema({
         employer: String,
         field: String
     },
-    date_of_birth: Number,
+    date_of_birth: String,
     batch: String,
     status: String,
     cluster_id: String,

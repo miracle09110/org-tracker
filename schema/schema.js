@@ -181,6 +181,7 @@ const MemberType = new GraphQLObjectType({
         name :{type: NameOutputType},
         contact_info : { type: ContactInfoOutputType},
         profession: { type: ProfessionOutputType},
+        date_of_birth: {type: GraphQLString},
         batch: {type: GraphQLString},
         status: {type: GraphQLString},
         cluster_id: {type: GraphQLID},
@@ -274,6 +275,7 @@ const Mutation = new GraphQLObjectType({
                 name :{ type:  new GraphQLNonNull(NameInputType)},
                 contact_info : {type: new GraphQLNonNull(ContactInfoInputType)},
                 profession: { type: new GraphQLNonNull(ProfessionInputType)},
+                date_of_birth: {type: new GraphQLNonNull(GraphQLString)},
                 batch: {type: new GraphQLNonNull(GraphQLString)},
                 status: {type: new GraphQLNonNull(GraphQLString)},
                 cluster_id: {type: new GraphQLNonNull(GraphQLID)},
@@ -297,6 +299,7 @@ const Mutation = new GraphQLObjectType({
                         employer: args.profession.employer,
                         field: args.profession.field
                     },
+                    date_of_birth: args.date_of_birth,
                     batch: args.batch,
                     status: args.status,
                     cluster_id: args.cluster_id,
