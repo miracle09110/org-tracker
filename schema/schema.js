@@ -8,63 +8,9 @@ const User = require('../model/UserModel');
 const Member = require('../model/MemberModel');
 const Cluster = require('../model/ClusterModel');
 const Role = require('../model/RoleModel');
+const Activity = require('../model/ActivityModel');
 const CONST = require('../constant');
 // const {Users, Members, Clusters, Roles} =  require('./offlineData');
-
-const mockActivityData = [
-    {
-      "imagePath": "SomeimagePath1",
-      "title": "sometitle1",
-      "date":  "2019-11-21"
-    },
-    {
-      "imagePath": "SomeimagePath2",
-      "title": "sometitle2",
-      "date":  "2019-11-23"
-    },
-    {
-      "imagePath": "SomeimagePath3",
-      "title": "sometitle3",
-      "date":  "2019-11-24"
-    },
-    {
-      "imagePath": "SomeimagePath4",
-      "title": "sometitle4",
-      "date":  "2019-11-30"
-    },
-    {
-      "imagePath": "SomeimagePath5",
-      "title": "sometitle5",
-      "date":  "2019-12-21"
-    },
-    {
-      "imagePath": "SomeimagePath6",
-      "title": "sometitle6",
-      "date":  "2019-11-21"
-    },
-    {
-      "imagePath": "SomeimagePath7",
-      "title": "sometitle7",
-      "date":  "2019-11-21"
-    },
-    {
-      "imagePath": "SomeimagePath8",
-      "title": "sometitle8",
-      "date":  "2019-11-21"
-    },
-    {
-      "imagePath": "SomeimagePath9",
-      "title": "sometitle9",
-      "date":  "2019-11-21"
-    },
-    {
-      "imagePath": "SomeimagePath10",
-      "title": "sometitle10",
-      "date":  "2019-11-21"
-    },
-
-    ];
-
 
 const {
     GraphQLObjectType,
@@ -131,9 +77,14 @@ const AuthType = new GraphQLObjectType({
 const ActivityType = new GraphQLObjectType({
     name: 'Activity',
     fields: ()=>({
-        imagePath: {type: GraphQLString},
-        title: {type: GraphQLString},
-        date: {type: GraphQLString},
+        event_name: {type: GraphQLString},
+        venue: {type: GraphQLString},
+        start_date: {type: GraphQLString},
+        end_date: {type: GraphQLString},
+        start_time: {type: GraphQLString},
+        end_time: {type: GraphQLString},
+        image_base_64: {type: GraphQLString},
+        description: {type: GraphQLString},
     })
 });
 
@@ -260,7 +211,8 @@ const RootQuery = new GraphQLObjectType({
         activities: {
             type: new GraphQLList(ActivityType),
             resolve(parent, args){
-                return mockActivityData;
+                const today = new Date().toISOString().split('T')[0];
+                return Activity.find({ end_date : { $gte: today }});
             }
         }
     }
@@ -355,6 +307,34 @@ const Mutation = new GraphQLObjectType({
                     type: args.type
                 });
                 return cluster.save();
+            }
+        },
+        addActivity: {
+            type: ActivityType,
+            args: {
+                event_name: {type: new GraphQLNonNull(GraphQLString)},
+                venue: {type: new GraphQLNonNull(GraphQLString)},
+                start_date: {type: new GraphQLNonNull(GraphQLString)},
+                end_date: {type: new GraphQLNonNull(GraphQLString)},
+                start_time: {type: new GraphQLNonNull(GraphQLString)},
+                end_time: {type: new GraphQLNonNull(GraphQLString)},
+                image_base_64: {type: new GraphQLNonNull(GraphQLString)},
+                description: {type: new GraphQLNonNull(GraphQLString)},
+            },
+            resolve(parent, args){
+                let activity = new Activity({
+                    _id: mongoose.Types.ObjectId(),
+                    event_name: args.event_name,
+                    venue: args.venue,
+                    start_date: args.start_date,
+                    end_date: args.end_date,
+                    start_time: args.start_time,
+                    end_time: args.end_time,
+                    image_base_64: args.image_base_64,
+                    description: args.description
+                });
+
+                return activity.save();
             }
         },
         updateMemberInfo: {
