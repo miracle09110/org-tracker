@@ -12,9 +12,12 @@ const grapqlHTTP = require('express-graphql');
 const logger = require('./util/logger');
 const db = require('./db/mongo');
 const CONSTANT = require('./constant');
-const authChecker = require('./security/authChecker')
+const authChecker = require('./security/authChecker');
+const imageUpdater = require('./util/imageUpdater');
 const schema = require('./schema/schema');
 
+//models
+const Activity = require('./model/ActivityModel');
 
 //initilizations
 logger.init();
@@ -39,7 +42,7 @@ db.connectToDB(CONSTANT.MONGO,mongoose)
 //middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(authChecker.validate);
+//app.use(authChecker.validate);
 app.use(cors());
 app.use('/graphql',grapqlHTTP({
     schema,
@@ -54,3 +57,6 @@ app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
+app.post('/api/v1.0.0/image',(req,res)=>{
+    imageUpdater.saveImage(req,res,Activity);
+});
