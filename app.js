@@ -13,7 +13,6 @@ const logger = require('./util/logger');
 const db = require('./db/mongo');
 const CONSTANT = require('./constant');
 const authChecker = require('./security/authChecker');
-const imageUpdater = require('./util/imageUpdater');
 const schema = require('./schema/schema');
 
 //models
